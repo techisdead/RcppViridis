@@ -13,3 +13,7 @@ rcpp_convert_hex_to_rgb <- function(hex) {
     .Call(`_RcppViridis_rcpp_convert_hex_to_rgb`, hex)
 }
 
+rcpp_convert_rgb_to_hex <- function(r, g, b) {
+    .Call(`_RcppViridis_rcpp_convert_rgb_to_hex`, r, g, b)
+}
+

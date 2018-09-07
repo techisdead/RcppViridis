@@ -16,7 +16,11 @@ Rcpp::StringVector rcpp_colour_str_value_hex( Rcpp::StringVector x, std::string 
 
 
 // [[Rcpp::export]]
-Rcpp::IntegerVector rcpp_convert_hex_to_rgb( std::string hex ) {
+Rcpp::IntegerMatrix rcpp_convert_hex_to_rgb( Rcpp::StringVector hex ) {
   return rcppviridis::convert::convert_hex_to_rgb( hex );
 }
 
+// [[Rcpp::export]]
+Rcpp::StringVector rcpp_convert_rgb_to_hex(Rcpp::NumericVector r, Rcpp::NumericVector g, Rcpp::NumericVector b) {
+  return rcppviridis::convert::convert_rgb_to_hex(r, g, b);
+}

@@ -2,7 +2,13 @@
 
 S3method(colour_values,character)
 S3method(colour_values,default)
+S3method(rgb_to_hex,default)
+S3method(rgb_to_hex,integer)
+S3method(rgb_to_hex,matrix)
+S3method(rgb_to_hex,numeric)
 export(color_values)
 export(colour_values)
+export(hex_to_rgb)
+export(rgb_to_hex)
 importFrom(Rcpp,sourceCpp)
 useDynLib(RcppViridis, .registration = TRUE)

@@ -73,7 +73,7 @@ namespace colours {
 
     double this_x;
     int r, g, b;
-    std::string hex_str;
+    Rcpp::String hex_str;
 
     for( i = 0; i < n; i ++ ) {
 

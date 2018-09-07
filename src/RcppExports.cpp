@@ -32,13 +32,26 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_convert_hex_to_rgb
-Rcpp::IntegerVector rcpp_convert_hex_to_rgb(std::string hex);
+Rcpp::IntegerMatrix rcpp_convert_hex_to_rgb(Rcpp::StringVector hex);
 RcppExport SEXP _RcppViridis_rcpp_convert_hex_to_rgb(SEXP hexSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< std::string >::type hex(hexSEXP);
+    Rcpp::traits::input_parameter< Rcpp::StringVector >::type hex(hexSEXP);
     rcpp_result_gen = Rcpp::wrap(rcpp_convert_hex_to_rgb(hex));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rcpp_convert_rgb_to_hex
+Rcpp::StringVector rcpp_convert_rgb_to_hex(Rcpp::NumericVector r, Rcpp::NumericVector g, Rcpp::NumericVector b);
+RcppExport SEXP _RcppViridis_rcpp_convert_rgb_to_hex(SEXP rSEXP, SEXP gSEXP, SEXP bSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type r(rSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type g(gSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type b(bSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_convert_rgb_to_hex(r, g, b));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -47,6 +60,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_RcppViridis_rcpp_colour_num_value_hex", (DL_FUNC) &_RcppViridis_rcpp_colour_num_value_hex, 3},
     {"_RcppViridis_rcpp_colour_str_value_hex", (DL_FUNC) &_RcppViridis_rcpp_colour_str_value_hex, 3},
     {"_RcppViridis_rcpp_convert_hex_to_rgb", (DL_FUNC) &_RcppViridis_rcpp_convert_hex_to_rgb, 1},
+    {"_RcppViridis_rcpp_convert_rgb_to_hex", (DL_FUNC) &_RcppViridis_rcpp_convert_rgb_to_hex, 3},
     {NULL, NULL, 0}
 };
 
