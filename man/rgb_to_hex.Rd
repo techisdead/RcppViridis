@@ -4,7 +4,7 @@
 \alias{rgb_to_hex}
 \title{RGB to Hex}
 \usage{
-rgb_to_hex(x, ...)
+rgb_to_hex(rgb)
 }
 \arguments{
 \item{x}{rgb}

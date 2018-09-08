@@ -10,6 +10,31 @@
 #   times = 1
 # )
 
+# library(microbenchmark)
+# x <- rep("#000000", 1e6)
+#
+# microbenchmark(
+#   gr = { y <- grDevices::col2rgb( x ) },
+#   rv = { z <- RcppViridis::hex_to_rgb( x ) },
+#   times = 25
+# )
+
+# hex_to_rgb("#00FFF0")
+
+
+# cppFunction('int test( std::string s ) {
+#   unsigned int x = std::stoul(s, nullptr, 16);
+#   return x;
+# }')
+#
+# test( "FF" )
+
+# cppFunction('Rcpp::CharacterVector test() {
+#   Rcpp::CharacterVector test = "myvec";
+#   return test[0];
+# }')
+#
+# tset()
 
 # df <- data.frame(a = 10, x = 1:10)
 # df$col <- mapview:::zcolColors(df$x)

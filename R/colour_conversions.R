@@ -19,26 +19,23 @@ hex_to_rgb <- function( hex ) {
 #' @param x rgb
 #'
 #' @export
-rgb_to_hex <- function( x, ... ) {
+rgb_to_hex <- function( rgb ) {
   UseMethod("rgb_to_hex")
 }
 
 #' @export
-rgb_to_hex.integer <- function( x, ... ) {
-  rgb_to_hex.default( x[1], x[2], x[3] )
+rgb_to_hex.integer <- function( rgb ) {
+  rcpp_convert_rgb_to_hex( rgb[1], rgb[2], rgb[3] )
 }
 
 #' @export
-rgb_to_hex.numeric <- function( x, ... ) {
-  rgb_to_hex.default( x[1], x[2], x[3] )
+rgb_to_hex.numeric <- function( rgb ) {
+  rcpp_convert_rgb_to_hex( rgb[1], rgb[2], rgb[3] )
 }
 
 #' @export
-rgb_to_hex.matrix <- function( x, ... ) {
-  rgb_to_hex.default( x[, 1], x[, 2], x[, 3] )
+rgb_to_hex.matrix <- function( rgb ) {
+  rcpp_convert_rgb_to_hex( rgb[,1],rgb[,2],rgb[,3] )
 }
 
-#' @export
-rgb_to_hex.default <- function( x, y, z, ... ) {
-  rcpp_convert_rgb_to_hex( x, y, z )
-}
+
