@@ -16,7 +16,7 @@ namespace colours_hex {
       Rcpp::NumericVector red,
       Rcpp::NumericVector green,
       Rcpp::NumericVector blue,
-      Rcpp::NumericVector alpha,
+      Rcpp::NumericVector alpha,    // alpha must enter here already resovled, including splining?
       std::string na_colour) {
     int n = x.size();
     double colours = red.size();
@@ -102,7 +102,14 @@ namespace colours_hex {
     Rcpp::NumericVector red(256);
     Rcpp::NumericVector green(256);
     Rcpp::NumericVector blue(256);
+
+    // need to figure out if the alpha is on the palette or not before anything else.
+    // if not on palette,
+
     Rcpp::NumericVector alpha(x.size(), 255.0);
+
+    // TODO -
+    // if palette.ncol() == 4; the alpha gets interpolated along with the RGB
 
     rcppviridis::palette_utils::resolve_palette( palette, red, green, blue, alpha );
     Rcpp::NumericVector out_nv = rcppviridis::utils::resolve_string_vector( x );
@@ -120,6 +127,25 @@ namespace colours_hex {
     // if(!is_hex_colour(na_colour)) {
     //   Rcpp::stop("invalid NA Colour");
     // }
+
+    // if matrix palette.ncol() == 4
+    // - ignore alpha argument
+    // - alpha column gets splined
+
+    // ALPHA in [0,255] and assigned to each x
+    // if matrix palette.ncol() == 3 && alpha.length() > 1
+    // - alpha vector gets rescaled to [0,255], but NOT splined
+
+    // if matrix palette.ncol() == 3 && alpha.length() == 1; use single alpha constant
+    // - alpha must be in [0,255], but NOT splined
+
+    // if string palette && alpha.length() == 1; use single alpha constant
+    // - alpha must be in range [0,255], but NOT splined
+
+    // if string palette && alpha.length() == x.length()
+    // - alpha vector gets rescaled to [0,255], but NOT splined
+
+
     int x_size = x.size();
     Rcpp::NumericVector alpha_full( x_size );
     rcppviridis::palette_utils::validate_alpha( alpha, alpha_full, x_size );

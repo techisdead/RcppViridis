@@ -8,10 +8,10 @@
 #' @param alpha optional. Single value in [0,255] applied to all colours, or
 #' a vector of numeric values the same length as \code{x}. The numeric vector
 #' will be scaled into the range [0,255].
-#' If a matrix palette is supplied this argument is ignored.
+#' If a matrix palette is supplied with an 'alpha' column, this argument is ignored.
 #' @param return either 'hex' or 'rgb'. If 'hex' hex colours are returned.
 #' If 'rgb' a length(\code{x}) x 4-column matrix is returned with columns in
-#' the order red, green, blue and alpha, and each row corresponds to each elemetn of \code{x}
+#' the order red, green, blue and alpha, and each row corresponds to each element of \code{x}
 #'
 #' @details
 #'

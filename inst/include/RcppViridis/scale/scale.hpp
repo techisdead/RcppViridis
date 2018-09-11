@@ -8,8 +8,8 @@ namespace scale {
 
   inline Rcpp::NumericVector range(Rcpp::NumericVector x) {
     Rcpp::NumericVector rng(2);
-    rng[0] = min(na_omit(x));
-    rng[1] = max(na_omit(x));
+    rng[0] = Rcpp::min( Rcpp::na_omit( x ) );
+    rng[1] = Rcpp::max( Rcpp::na_omit( x ) );
     return rng;
   }
 

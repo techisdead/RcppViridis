@@ -147,9 +147,9 @@ test_that("rgb matrix returned", {
   expect_true(sum(m1[,2] - m2[,2]) <= length(m[,2]))
   expect_true(sum(m1[,3] - m2[,3]) <= length(m[,3]))
 
-  # df <- data.frame(a = 10, x = 1:5)
-  # df2 <- data.frame(a = 10, x = 1:5)
-  #
+  df <- data.frame(a = 10, x = 1:5)
+  df2 <- data.frame(a = 10, x = 1:5)
+
   # ## plot using the raw palette
   # df$col <- colour_values(df$x, palette = m)
   # barplot(height = df$a, col = df$col, border = NA, space = 0)
@@ -158,6 +158,26 @@ test_that("rgb matrix returned", {
   # barplot(height = df2$a, col = df2$col, border = NA, space = 0)
   # ## they are different because 'm' gets interpolated, then 'm2' gets interpolated
   # ## and since they are different to start with, the plots are different
+  #
+  # ## TODO
+  # ## matrix with an alpha-column. The alpha column needs to be interpolated along wtih
+  # ## the RGB values
+  # df <- data.frame(a = 10, x = 1:20)
+  # m <- matrix(c(rep(100, 4*25)), ncol = 4)
+  # df$col <- colour_values(df$x, palette = m)
+  # barplot(height = df$a, col = df$col, border = NA, space = 0)
+  #
+  # df <- data.frame(a = 10, x = 1:20)
+  #
+  # alpha <- c(0, 100, 150, 200, 255)
+  # m <- cbind( grDevices::colorRamp(c("red","green","blue"))(0:9/9), alpha )
+  #
+  # df$col <- colour_values(df$x, palette = m)
+  # ## THIS IS THE ERROR
+  #
+  # barplot(height = df$a, col = df$col, border = NA, space = 0)
+
+
 
 })
 
