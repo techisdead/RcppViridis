@@ -17,6 +17,7 @@ namespace colours_hex {
       Rcpp::NumericVector green,
       Rcpp::NumericVector blue,
       Rcpp::NumericVector alpha,    // alpha must enter here already resovled, including splining?
+      int& alpha_type,
       std::string na_colour) {
     int n = x.size();
     double colours = red.size();
@@ -33,6 +34,9 @@ namespace colours_hex {
     boost::math::cubic_b_spline< double > spline_green( green.begin(), green.end(), 0, step );
     boost::math::cubic_b_spline< double > spline_blue(  blue.begin(),  blue.end(),  0, step );
 
+    // can't spline ALPHA_CONSTANT
+    boost::math::cubic_b_spline< double > spline_alpha(  alpha.begin(),  alpha.end(),  0, step );
+
     double this_x;
     int i, r, g, b, a;
     std::string hex_str;
@@ -47,7 +51,12 @@ namespace colours_hex {
         r = round( spline_red( this_x ) * 255 ) ;
         g = round( spline_green( this_x ) * 255 );
         b = round( spline_blue( this_x ) * 255 );
-        a = alpha[i];
+
+        if( alpha_type == ALPHA_PALETTE ) {
+          a = round( spline_alpha( this_x ) * 255);
+        } else {
+          a = alpha[i];
+        }
         hex_strings[i] = rcppviridis::convert::convert_rgb_to_hex(r, g, b, a);
       }
     }
@@ -65,9 +74,11 @@ namespace colours_hex {
     Rcpp::NumericVector blue(256);
     Rcpp::NumericVector alpha(x.size(), 255.0);
 
+    int alpha_type = palette.ncol() == 4 ? ALPHA_PALETTE : ALPHA_CONSTANT;       // can't be a palette column in this function
+
     rcppviridis::palette_utils::resolve_palette( palette, red, green, blue, alpha );
 
-    return colour_values_to_hex( x, red, green, blue, alpha, na_colour );
+    return colour_values_to_hex( x, red, green, blue, alpha, alpha_type, na_colour );
   }
 
   inline Rcpp::StringVector colour_value_hex(
@@ -80,6 +91,15 @@ namespace colours_hex {
     // if(!is_hex_colour(na_colour)) {
     //   Rcpp::stop("invalid NA Colour");
     // }
+    int alpha_type = alpha.size() > 1 ? ALPHA_VECTOR : ALPHA_CONSTANT;
+
+    // if( palette.ncol() == 4 ) {
+    //   alpha_type = ALPHA_PALETTE;
+    // } else if ( alpha.size() == 1 ) {
+    //   alpha_type = ALPHA_CONSTANT;
+    // } else {
+    //   alpha_type = ALPHA_VECTOR;
+    // }
 
     int x_size = x.size();
     Rcpp::NumericVector alpha_full( x_size );
@@ -91,7 +111,7 @@ namespace colours_hex {
 
     rcppviridis::palette_utils::resolve_palette( palette, red, green, blue );
 
-    return colour_values_to_hex(x, red, green, blue, alpha_full, na_colour);
+    return colour_values_to_hex(x, red, green, blue, alpha_full, alpha_type, na_colour);
   }
 
   Rcpp::StringVector colour_value_hex (
@@ -105,6 +125,7 @@ namespace colours_hex {
 
     // need to figure out if the alpha is on the palette or not before anything else.
     // if not on palette,
+    int alpha_type = palette.ncol() == 4 ? ALPHA_PALETTE : ALPHA_CONSTANT;       // can't be avector in this function
 
     Rcpp::NumericVector alpha(x.size(), 255.0);
 
@@ -114,7 +135,7 @@ namespace colours_hex {
     rcppviridis::palette_utils::resolve_palette( palette, red, green, blue, alpha );
     Rcpp::NumericVector out_nv = rcppviridis::utils::resolve_string_vector( x );
 
-    return colour_values_to_hex( out_nv, red, green, blue, alpha, na_colour );
+    return colour_values_to_hex( out_nv, red, green, blue, alpha, alpha_type, na_colour );
   }
 
   inline Rcpp::StringVector colour_value_hex(
@@ -127,6 +148,8 @@ namespace colours_hex {
     // if(!is_hex_colour(na_colour)) {
     //   Rcpp::stop("invalid NA Colour");
     // }
+
+    int alpha_type = alpha.size() > 1 ? ALPHA_VECTOR : ALPHA_CONSTANT;       // can't be a palette column in this function
 
     // if matrix palette.ncol() == 4
     // - ignore alpha argument
@@ -157,7 +180,7 @@ namespace colours_hex {
     rcppviridis::palette_utils::resolve_palette( palette, red, green, blue );
     Rcpp::NumericVector out_nv = rcppviridis::utils::resolve_string_vector( x );
 
-    return colour_values_to_hex( out_nv, red, green, blue, alpha_full, na_colour );
+    return colour_values_to_hex( out_nv, red, green, blue, alpha_full, alpha_type, na_colour );
   }
 
 } // namespace colours
