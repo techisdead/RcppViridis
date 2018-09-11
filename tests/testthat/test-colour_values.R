@@ -177,6 +177,9 @@ test_that("rgb matrix returned", {
   #
   # barplot(height = df$a, col = df$col, border = NA, space = 0)
 
+  # boost::math::cubic_b_spline< double > spline_red(   red.begin(),   red.end(),   0, step );
+  # boost::math::cubic_b_spline< double > spline_green( green.begin(), green.end(), 0, step );
+  # boost::math::cubic_b_spline< double > spline_blue(  blue.begin(),  blue.end(),  0, step );
 
 
 })
